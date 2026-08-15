@@ -10,10 +10,14 @@ export class GameApiService {
   constructor(private http: HttpClient) {}
 
   searchGames(name: string) {
-    return this.http.get<RawgResponseDto>(`${this.base}/games/${name}`);
+    return this.http.get<RawgResponseDto>(`${this.base}/rawg/${name}`);
   }
 
   saveGame(game: RawgResultsDto) {
     return this.http.post<RawgResultsDto>(`${this.base}/games`, game);
+  }
+
+  saveListGame(listGame: RawgResultsDto[]) {
+    return this.http.post<RawgResultsDto>(`${this.base}/saveListGames`, listGame);
   }
 }

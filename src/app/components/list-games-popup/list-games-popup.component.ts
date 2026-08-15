@@ -17,19 +17,17 @@ import {MatDivider} from "@angular/material/divider";
 import {GameItemComponent} from "../share/game-item/game-item.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {GameApiService} from "../../services/game-api.service";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-list-games-popup',
   standalone: true,
   imports: [
-    MatButton, MatFormFieldModule,
+    MatFormFieldModule,
     MatInputModule,
     FormsModule,
     MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose, SearchBarComponent, NgForOf, MatList, MatListItem, MatDivider, GameItemComponent,
+    SearchBarComponent, NgForOf, MatList, MatListItem, MatDivider, GameItemComponent, MatIcon,
   ],
   templateUrl: './list-games-popup.component.html',
   styleUrl: './list-games-popup.component.scss'
@@ -37,6 +35,7 @@ import {GameApiService} from "../../services/game-api.service";
 export class ListGamesPopupComponent{
 
   reponse : RawgResultsDto[] | undefined;
+  addedGames: RawgResultsDto[] = [];
 
   @Input()
   gameNameSearch:string='';
@@ -48,6 +47,9 @@ export class ListGamesPopupComponent{
   }
 
   close() {
+    if(this.addedGames.length > 0){
+      this.saveGames(this.addedGames);
+    }
     this.dialogRef.close();
   }
 
@@ -58,19 +60,27 @@ export class ListGamesPopupComponent{
     });
   }
 
-  onAddGame(game: RawgResultsDto) {
-    this.gameApiService.saveGame(game).subscribe({
-      next: () => {
-        this.snackBar.open(`"${game.name}" ajouté avec succès!`, 'OK', {
-          duration: 3000
-        });
-      },
-      error: (err) => {
-        this.snackBar.open(`Erreur lors de l'ajout du jeu`, 'OK', {
-          duration: 3000
-        });
-        console.error('Erreur lors de l\'ajout du jeu:', err);
-      }
+  onAddGame(game: RawgResultsDto){
+    this.addedGames.push(game);
+  }
+
+  onRemoveGame(game: RawgResultsDto){
+    this.addedGames = this.addedGames.filter(g=>g.id!==game.id);
+  }
+
+  saveGames(listGame: RawgResultsDto[]) {
+    this.gameApiService.saveListGame(listGame).subscribe({
+      // next: () => {
+      //   this.snackBar.open(`"${game.name}" ajouté avec succès!`, 'OK', {
+      //     duration: 3000
+      //   });
+      // },
+      // error: (err) => {
+      //   this.snackBar.open(`Erreur lors de l'ajout du jeu`, 'OK', {
+      //     duration: 3000
+      //   });
+      //   console.error('Erreur lors de l\'ajout du jeu:', err);
+      // }
     });
   }
 }

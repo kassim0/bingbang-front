@@ -15,13 +15,29 @@ export class GameItemComponent {
   @Input()
   game: RawgResultsDto | undefined;
 
+  @Input()
+  gamesSelected : RawgResultsDto[] = [];
+
   @Output()
   addGame = new EventEmitter<RawgResultsDto>();
 
+  @Output()
+  removeGame = new EventEmitter<RawgResultsDto>();
+
   onAddGame() {
     if (this.game) {
-      this.addGame.emit(this.game);
+      if(this.isGameSelected()) {
+        this.removeGame.emit(this.game);
+      }
+      else{
+        this.addGame.emit(this.game);
+      }
+
     }
+  }
+
+  isGameSelected(): boolean {
+    return this.gamesSelected.some(g => g.id === this.game?.id);
   }
 
 }
