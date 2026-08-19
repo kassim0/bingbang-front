@@ -11,25 +11,16 @@
 <!--  </div>-->
 <!--</div>-->
 
+<div class="dashboard border">
 
-<table class="border">
-  <tbody class="border">
-    <tr class="border">
-      <th class="case">
-        <button mat-raised-button (click)="OpenPopup()">+</button>
-      </th>
-      <th class="case"></th>
-      <th class="case"></th>
-    </tr>
-    <tr class="border">
-      <th class="case"></th>
-      <th class="case"></th>
-      <th class="case"></th>
-    </tr>
-    <tr class="border">
-      <th class="case"></th>
-      <th class="case"></th>
-      <th class="case"></th>
-    </tr>
-  </tbody>
-</table>
+<div *ngFor="let listGame of listGames" class="case-dashboard border">
+  <app-apercu-list
+    [listGame] = listGame
+  ></app-apercu-list>
+</div>
+
+<div class="case-dashboard border">
+  <button mat-raised-button (click)="OpenPopup()">+</button>
+</div>
+
+</div>
