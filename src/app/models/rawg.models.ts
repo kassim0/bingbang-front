@@ -13,3 +13,8 @@ export interface RawgResponseDto {
   previous?: string;
   results?: Array<RawgResultsDto>;
 }
+
+export interface NewGameList{
+  listName : string;
+  gameList : RawgResultsDto[];
+}

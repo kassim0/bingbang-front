@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {RawgResponseDto, RawgResultsDto} from '../models/rawg.models';
+import {NewGameList, RawgResponseDto, RawgResultsDto} from '../models/rawg.models';
 import {ListGame} from "../models/games.model";
 
 @Injectable({providedIn: 'root'})
@@ -18,8 +18,8 @@ export class GameApiService {
     return this.http.post<RawgResultsDto>(`${this.base}/games`, game);
   }
 
-  saveListGame(listGame: RawgResultsDto[]) {
-    return this.http.post<RawgResultsDto>(`${this.base}/saveListGames`, listGame);
+  saveListGame(newGameList:NewGameList) {
+    return this.http.post<RawgResultsDto>(`${this.base}/saveListGames`, newGameList);
   }
 
   getListGame() {

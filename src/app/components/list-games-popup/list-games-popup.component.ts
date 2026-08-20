@@ -10,7 +10,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {SearchBarComponent} from "../share/search-bar/search-bar.component";
-import {RawgResultsDto} from "../../models/rawg.models";
+import {NewGameList, RawgResultsDto} from "../../models/rawg.models";
 import {NgForOf} from "@angular/common";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
@@ -35,7 +35,9 @@ import {MatIcon} from "@angular/material/icon";
 export class ListGamesPopupComponent{
 
   reponse : RawgResultsDto[] | undefined;
+  newList : NewGameList = {listName: '', gameList: []};
   addedGames: RawgResultsDto[] = [];
+  listName : string = "";
 
   @Input()
   gameNameSearch:string='';
@@ -48,7 +50,9 @@ export class ListGamesPopupComponent{
 
   close() {
     if(this.addedGames.length > 0){
-      this.saveGames(this.addedGames);
+      this.newList.gameList = this.addedGames;
+      this.newList.listName = this.listName;
+      this.saveListGames(this.newList);
     }
     this.dialogRef.close();
   }
@@ -60,6 +64,10 @@ export class ListGamesPopupComponent{
     });
   }
 
+  receiveListName(listName: string) {
+    this.listName = listName;
+  }
+
   onAddGame(game: RawgResultsDto){
     this.addedGames.push(game);
   }
@@ -68,8 +76,8 @@ export class ListGamesPopupComponent{
     this.addedGames = this.addedGames.filter(g=>g.id!==game.id);
   }
 
-  saveGames(listGame: RawgResultsDto[]) {
-    this.gameApiService.saveListGame(listGame).subscribe({
+  saveListGames(newList : NewGameList) {
+    this.gameApiService.saveListGame(newList).subscribe({
       // next: () => {
       //   this.snackBar.open(`"${game.name}" ajouté avec succès!`, 'OK', {
       //     duration: 3000

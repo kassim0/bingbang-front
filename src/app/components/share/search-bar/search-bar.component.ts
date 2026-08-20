@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
@@ -23,6 +23,12 @@ export class SearchBarComponent {
   dataToParent :  EventEmitter<string> = new EventEmitter<string>();
 
   inputResult: string='';
+
+  @Input()
+  label: string = '';
+
+  @Input()
+  placeholder: string = '';
 
   sendInput() {
     this.dataToParent.emit(this.inputResult);
