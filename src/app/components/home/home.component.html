@@ -1,20 +1,8 @@
-<!--<div-->
-<!--  class="hero-banner"-->
-<!--  [style.background-image]="backgroundImage"-->
-<!--  (dragover)="onDragOver($event)"-->
-<!--  (dragleave)="onDragLeave($event)"-->
-<!--  (drop)="onDrop($event)"-->
-<!--  [class.drag-over]="isDragging">-->
-<!--  <div class="drop-overlay" [class.dragging]="isDragging">-->
-<!--    <span class="drop-overlay__icon">🖼️</span>-->
-<!--    <span class="drop-overlay__text">{{ isDragging ? 'Relâchez pour changer l\'image' : 'Glissez une image pour personnaliser' }}</span>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div class="dashboard border">
 
 <div *ngFor="let listGame of listGames" class="case-dashboard border">
   <app-apercu-list
+    (click)="openMyListPopup(listGame)"
     [listGame] = listGame
   ></app-apercu-list>
 </div>

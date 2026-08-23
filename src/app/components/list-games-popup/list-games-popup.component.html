@@ -1,17 +1,21 @@
 <div>
   <button style="float:right; background-color: red;" (click)="close()"><mat-icon>close</mat-icon></button>
 
-  <app-search-bar style=" display: block;margin: 20px 10px;" (dataToParent)="receiveListName($event)"
-  [label]="'list name'"
-  [placeholder]="'List N°'"
-  ></app-search-bar>
+  <mat-form-field appearance="outline">
+    <mat-label>list name</mat-label>
+    <input matInput placeholder="List N°" [(ngModel)]="listNameInput">
+  </mat-form-field>
 
   <app-search-bar style=" display: block;margin: 20px 10px;" (dataToParent)="receiveData($event)"
   [label]="'search your game'"
   [placeholder]="'ex: \'Outer wilds\''"
   ></app-search-bar>
 
-  <mat-list>
+  <div *ngIf="isSearching" style="display: flex; justify-content: center; margin: 20px;">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-list *ngIf="!isSearching">
     <div *ngFor="let game of reponse">
       <mat-list-item>
         <app-game-item class="game-item" [game]="game" (addGame)="onAddGame($event)" (removeGame)="onRemoveGame($event)" [gamesSelected]="addedGames" ></app-game-item>

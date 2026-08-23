@@ -77,3 +77,13 @@ table {
   align-items: center;
   justify-content: center;
 }
+
+app-apercu-list{
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover{
+    transform: scale(1.05);
+  }
+}

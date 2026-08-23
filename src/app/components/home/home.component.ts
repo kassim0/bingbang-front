@@ -1,28 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
-import {SearchBarComponent} from "../share/search-bar/search-bar.component";
+import {NgForOf} from '@angular/common';
 import {ListGamesPopupComponent} from "../list-games-popup/list-games-popup.component";
 import {MatDialog} from "@angular/material/dialog";
-import {MatList, MatListItem} from "@angular/material/list";
-import {MatDivider} from "@angular/material/divider";
 import {GameApiService} from "../../services/game-api.service";
 import {ListGame} from "../../models/games.model";
-import {MatTable} from "@angular/material/table";
 import {ApercuListComponent} from "../apercu-list/apercu-list.component";
+import {MatButton} from "@angular/material/button";
+import {MyGameListComponent} from "../my-game-list/my-game-list.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    SearchBarComponent,
-    ListGamesPopupComponent,
-    MatListItem,
-    MatDivider,
-    MatList,
     NgForOf,
-    NgIf,
-    MatTable,
     ApercuListComponent,
+    MatButton,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -80,6 +72,15 @@ export class HomeComponent implements OnInit{
       this.gameApiService.getListGame().subscribe(listGames => {
         this.listGames = listGames;
       })
+    })
+  }
+
+  openMyListPopup(listGames : ListGame){
+    console.log(listGames);
+    const dialogRef = this.dialog.open(MyGameListComponent,{
+      width: '40%',
+      height:'90%',
+      data: {gameList : listGames}
     })
   }
 

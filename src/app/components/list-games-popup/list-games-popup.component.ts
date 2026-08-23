@@ -11,13 +11,14 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {SearchBarComponent} from "../share/search-bar/search-bar.component";
 import {NewGameList, RawgResultsDto} from "../../models/rawg.models";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
 import {GameItemComponent} from "../share/game-item/game-item.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {GameApiService} from "../../services/game-api.service";
 import {MatIcon} from "@angular/material/icon";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-list-games-popup',
@@ -27,7 +28,7 @@ import {MatIcon} from "@angular/material/icon";
     MatInputModule,
     FormsModule,
     MatButtonModule,
-    SearchBarComponent, NgForOf, MatList, MatListItem, MatDivider, GameItemComponent, MatIcon,
+    SearchBarComponent, NgForOf, NgIf, MatList, MatListItem, MatDivider, GameItemComponent, MatIcon, MatProgressSpinnerModule,
   ],
   templateUrl: './list-games-popup.component.html',
   styleUrl: './list-games-popup.component.scss'
@@ -37,21 +38,21 @@ export class ListGamesPopupComponent{
   reponse : RawgResultsDto[] | undefined;
   newList : NewGameList = {listName: '', gameList: []};
   addedGames: RawgResultsDto[] = [];
-  listName : string = "";
+  listNameInput : string = "";
+  isSearching : boolean = false;
 
   @Input()
   gameNameSearch:string='';
 
   constructor(
     public dialogRef: MatDialogRef<ListGamesPopupComponent>,
-    private gameApiService: GameApiService,
-    private snackBar: MatSnackBar) {
+    private gameApiService: GameApiService) {
   }
 
   close() {
     if(this.addedGames.length > 0){
       this.newList.gameList = this.addedGames;
-      this.newList.listName = this.listName;
+      this.newList.listName = this.listNameInput;
       this.saveListGames(this.newList);
     }
     this.dialogRef.close();
@@ -59,13 +60,16 @@ export class ListGamesPopupComponent{
 
   receiveData(data: string) {
     this.gameNameSearch = data;
-    this.gameApiService.searchGames(this.gameNameSearch).subscribe((reponse) => {
-      this.reponse = reponse.results;
+    this.isSearching = true;
+    this.gameApiService.searchGames(this.gameNameSearch).subscribe({
+      next: (reponse) => {
+        this.reponse = reponse.results;
+        this.isSearching = false;
+      },
+      error: () => {
+        this.isSearching = false;
+      }
     });
-  }
-
-  receiveListName(listName: string) {
-    this.listName = listName;
   }
 
   onAddGame(game: RawgResultsDto){
@@ -77,18 +81,7 @@ export class ListGamesPopupComponent{
   }
 
   saveListGames(newList : NewGameList) {
-    this.gameApiService.saveListGame(newList).subscribe({
-      // next: () => {
-      //   this.snackBar.open(`"${game.name}" ajouté avec succès!`, 'OK', {
-      //     duration: 3000
-      //   });
-      // },
-      // error: (err) => {
-      //   this.snackBar.open(`Erreur lors de l'ajout du jeu`, 'OK', {
-      //     duration: 3000
-      //   });
-      //   console.error('Erreur lors de l\'ajout du jeu:', err);
-      // }
-    });
+    this.gameApiService.saveListGame(newList).subscribe({});
   }
+
 }
