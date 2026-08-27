@@ -15,6 +15,6 @@ export interface RawgResponseDto {
 }
 
 export interface NewGameList{
-  listName : string;
-  gameList : RawgResultsDto[];
+  name : string;
+  rawgGames : RawgResultsDto[];
 }

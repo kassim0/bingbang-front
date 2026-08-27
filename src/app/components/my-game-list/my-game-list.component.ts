@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {ListGame} from "../../models/games.model";
+import {GamesList} from "../../models/games.model";
 import {NgForOf} from "@angular/common";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
@@ -14,11 +14,11 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 })
 export class MyGameListComponent {
 
-  gameList : ListGame;
+  gamesList : GamesList;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { gameList: ListGame }) {
-    this.gameList = data.gameList;
-    console.log(this.gameList);
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { gamesList: GamesList }) {
+    this.gamesList = data.gamesList;
+    console.log(this.gamesList);
   }
 
 }

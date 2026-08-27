@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
-import {ListGamesPopupComponent} from "../list-games-popup/list-games-popup.component";
+import {GamesSearchPopupComponent} from "../games-search-popup/games-search-popup.component";
 import {MatDialog} from "@angular/material/dialog";
 import {GameApiService} from "../../services/game-api.service";
-import {ListGame} from "../../models/games.model";
-import {ApercuListComponent} from "../apercu-list/apercu-list.component";
+import {GamesList} from "../../models/games.model";
+import {ApercuGamesListComponent} from "../apercu-games-list/apercu-games-list.component";
 import {MatButton} from "@angular/material/button";
 import {MyGameListComponent} from "../my-game-list/my-game-list.component";
 
@@ -13,7 +13,7 @@ import {MyGameListComponent} from "../my-game-list/my-game-list.component";
   standalone: true,
   imports: [
     NgForOf,
-    ApercuListComponent,
+    ApercuGamesListComponent,
     MatButton,
   ],
   templateUrl: './home.component.html',
@@ -21,66 +21,38 @@ import {MyGameListComponent} from "../my-game-list/my-game-list.component";
 })
 export class HomeComponent implements OnInit{
 
-  backgroundImage: string = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
-  isDragging = false;
-  hasCustomImage = false;
-  listGames : ListGame[] = [];
+  GamesLists : GamesList[] = [];
 
   constructor(public dialog:MatDialog,
               private gameApiService: GameApiService) {
-
   }
 
   ngOnInit(): void {
-    this.gameApiService.getListGame().subscribe(listGames => {
-      this.listGames = listGames;
+    this.gameApiService.getListGame().subscribe(gamesLists => {
+      this.GamesLists = gamesLists;
     });
   }
 
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = true;
-  }
-
-  onDragLeave(event: DragEvent) {
-    this.isDragging = false;
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-
-    const file = event.dataTransfer?.files[0];
-    if (!file || !file.type.startsWith('image/')) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.backgroundImage = `url('${reader.result}')`;
-      this.hasCustomImage = true;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  OpenPopup() {
-    const dialogRef = this.dialog.open(ListGamesPopupComponent,{
+  OpenGamesSearchPopup() {
+    const dialogRef = this.dialog.open(GamesSearchPopupComponent,{
       width: '40%',
       height:'90%',
       data: {}
     })
 
     dialogRef.afterClosed().subscribe(() => {
-      this.gameApiService.getListGame().subscribe(listGames => {
-        this.listGames = listGames;
+      this.gameApiService.getListGame().subscribe(gamesList => {
+        this.GamesLists = gamesList;
       })
     })
   }
 
-  openMyListPopup(listGames : ListGame){
-    console.log(listGames);
+  openMyGaleListPopup(gameList : GamesList){
+    console.log(gameList);
     const dialogRef = this.dialog.open(MyGameListComponent,{
       width: '40%',
       height:'90%',
-      data: {gameList : listGames}
+      data: {gamesList : gameList}
     })
   }
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListGamesPopupComponent } from './list-games-popup.component';
+import { ApercuGamesListComponent } from './apercu-games-list.component';
 
-describe('ListGamesPopupComponent', () => {
-  let component: ListGamesPopupComponent;
-  let fixture: ComponentFixture<ListGamesPopupComponent>;
+describe('ApercuListComponent', () => {
+  let component: ApercuGamesListComponent;
+  let fixture: ComponentFixture<ApercuGamesListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListGamesPopupComponent]
+      imports: [ApercuGamesListComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(ListGamesPopupComponent);
+
+    fixture = TestBed.createComponent(ApercuGamesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

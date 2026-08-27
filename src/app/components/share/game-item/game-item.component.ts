@@ -13,10 +13,10 @@ import {MatIcon} from "@angular/material/icon";
 export class GameItemComponent {
 
   @Input()
-  game: RawgResultsDto | undefined;
+  rawgGame: RawgResultsDto | undefined;
 
   @Input()
-  gamesSelected : RawgResultsDto[] = [];
+  rawgGamesSelected : RawgResultsDto[] = [];
 
   @Output()
   addGame = new EventEmitter<RawgResultsDto>();
@@ -25,19 +25,19 @@ export class GameItemComponent {
   removeGame = new EventEmitter<RawgResultsDto>();
 
   onAddGame() {
-    if (this.game) {
+    if (this.rawgGame) {
       if(this.isGameSelected()) {
-        this.removeGame.emit(this.game);
+        this.removeGame.emit(this.rawgGame);
       }
       else{
-        this.addGame.emit(this.game);
+        this.addGame.emit(this.rawgGame);
       }
 
     }
   }
 
   isGameSelected(): boolean {
-    return this.gamesSelected.some(g => g.id === this.game?.id);
+    return this.rawgGamesSelected.some(g => g.id === this.rawgGame?.id);
   }
 
 }

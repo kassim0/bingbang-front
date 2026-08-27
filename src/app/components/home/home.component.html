@@ -1,14 +1,14 @@
 <div class="dashboard border">
 
-<div *ngFor="let listGame of listGames" class="case-dashboard border">
-  <app-apercu-list
-    (click)="openMyListPopup(listGame)"
-    [listGame] = listGame
-  ></app-apercu-list>
+<div *ngFor="let listGame of GamesLists" class="case-dashboard border">
+  <app-apercu-games-list
+    (click)="openMyGaleListPopup(listGame)"
+    [gamesList] = listGame
+  ></app-apercu-games-list>
 </div>
 
 <div class="case-dashboard border">
-  <button mat-raised-button (click)="OpenPopup()">+</button>
+  <button mat-raised-button (click)="OpenGamesSearchPopup()">+</button>
 </div>
 
 </div>

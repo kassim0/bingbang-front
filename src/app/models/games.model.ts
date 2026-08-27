@@ -7,9 +7,9 @@ export interface Game{
   rawgId: string;
 }
 
-export interface ListGame {
+export interface GamesList {
   id: number;
-  listName: string;
-  listOrder : number;
-  listGames : Game[];
+  name: string;
+  position : number;
+  games : Game[];
 }

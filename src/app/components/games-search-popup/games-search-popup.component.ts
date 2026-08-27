@@ -21,7 +21,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-list-games-popup',
+  selector: 'app-games-search-popup',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -30,13 +30,13 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatButtonModule,
     SearchBarComponent, NgForOf, NgIf, MatList, MatListItem, MatDivider, GameItemComponent, MatIcon, MatProgressSpinnerModule,
   ],
-  templateUrl: './list-games-popup.component.html',
-  styleUrl: './list-games-popup.component.scss'
+  templateUrl: './games-search-popup.component.html',
+  styleUrl: './games-search-popup.component.scss'
 })
-export class ListGamesPopupComponent{
+export class GamesSearchPopupComponent {
 
   reponse : RawgResultsDto[] | undefined;
-  newList : NewGameList = {listName: '', gameList: []};
+  newList : NewGameList = {name: '', rawgGames: []};
   addedGames: RawgResultsDto[] = [];
   listNameInput : string = "";
   isSearching : boolean = false;
@@ -45,14 +45,14 @@ export class ListGamesPopupComponent{
   gameNameSearch:string='';
 
   constructor(
-    public dialogRef: MatDialogRef<ListGamesPopupComponent>,
+    public dialogRef: MatDialogRef<GamesSearchPopupComponent>,
     private gameApiService: GameApiService) {
   }
 
   close() {
     if(this.addedGames.length > 0){
-      this.newList.gameList = this.addedGames;
-      this.newList.listName = this.listNameInput;
+      this.newList.rawgGames = this.addedGames;
+      this.newList.name = this.listNameInput;
       this.saveListGames(this.newList);
     }
     this.dialogRef.close();
