@@ -1,12 +1,12 @@
 <h1>{{ gamesList.name }}</h1>
 
-<ul *ngFor="let game of gamesList.games">
-  <img src="{{game?.backgroundImage}}" style="width: 50px; height: 50px">
-  <span class="game-name" [ngClass]="isGameSelected(game) ? 'line-through' : '' " ]>{{game?.name}}</span>
-  <button mat-icon-button color="primary" (click)="onDeleteGame(game)" title="supprimer le jeu">
-    <mat-icon>{{ isGameSelected(game) ? 'restore_from_trash' : 'delete' }}</mat-icon>
+<ul *ngFor="let gameItem of gamesList.games">
+  <img src="{{gameItem?.game?.backgroundImage}}" style="width: 50px; height: 50px">
+  <span class="game-name" [ngClass]="isGameSelected(gameItem.game) ? 'line-through' : '' " ]>{{gameItem?.game?.name}}</span>
+  <button mat-icon-button color="primary" (click)="onDeleteGame(gameItem.game)" title="supprimer le jeu">
+    <mat-icon>{{ isGameSelected(gameItem.game) ? 'restore_from_trash' : 'delete' }}</mat-icon>
   </button>
 
 </ul>
 
-<button mat-button (click)="saveModifGamesList()">save</button>
+<button mat-button style="background-color: green; color:white" (click)="saveModifGamesList()">save</button>

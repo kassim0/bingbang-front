@@ -19,10 +19,14 @@ export class GameApiService {
   }
 
   saveListGame(newGameList:NewGameList) {
-    return this.http.post<RawgResultsDto>(`${this.base}/saveGamesList`, newGameList);
+    return this.http.post<RawgResultsDto>(`${this.base}/newGamesList`, newGameList);
   }
 
   getListGame() {
     return this.http.get<GamesList[]>(`${this.base}/getGamesLists`);
+  }
+
+  deleteGamesFromGamesList(gamesListId:number, gamesId:number[]){
+    return this.http.get<GamesList[]>(`${this.base}/deleteGamesFromGamesList`);
   }
 }

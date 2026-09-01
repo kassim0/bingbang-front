@@ -1,9 +1,9 @@
 <div class="dashboard border">
 
-<div *ngFor="let listGame of GamesLists" class="case-dashboard border">
+<div *ngFor="let gamesList of GamesLists" class="case-dashboard border">
   <app-apercu-games-list
-    (click)="openMyGaleListPopup(listGame)"
-    [gamesList] = listGame
+    (click)="openMyGaleListPopup(gamesList)"
+    [gamesList] = gamesList
   ></app-apercu-games-list>
 </div>
 
