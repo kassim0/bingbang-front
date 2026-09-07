@@ -81,7 +81,7 @@ export class GamesSearchPopupComponent {
   }
 
   saveListGames(newList : NewGameList) {
-    this.gameApiService.saveListGame(newList).subscribe({});
+    this.gameApiService.saveGamesList(newList).subscribe({});
   }
 
 }

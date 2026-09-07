@@ -14,15 +14,11 @@ export class GameApiService {
     return this.http.get<RawgResponseDto>(`${this.base}/rawg/${name}`);
   }
 
-  saveGame(game: RawgResultsDto) {
-    return this.http.post<RawgResultsDto>(`${this.base}/games`, game);
+  saveGamesList(newGameList:NewGameList) {
+    return this.http.put<RawgResultsDto>(`${this.base}/newGamesList`, newGameList);
   }
 
-  saveListGame(newGameList:NewGameList) {
-    return this.http.post<RawgResultsDto>(`${this.base}/newGamesList`, newGameList);
-  }
-
-  getListGame() {
+  getGamesList() {
     return this.http.get<GamesList[]>(`${this.base}/getGamesLists`);
   }
 

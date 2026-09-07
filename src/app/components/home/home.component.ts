@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.gameApiService.getListGame().subscribe(gamesLists => {
+    this.gameApiService.getGamesList().subscribe(gamesLists => {
       this.GamesLists = gamesLists;
     });
   }
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit{
     })
 
     dialogRef.afterClosed().subscribe(() => {
-      this.gameApiService.getListGame().subscribe(gamesList => {
+      this.gameApiService.getGamesList().subscribe(gamesList => {
         this.GamesLists = gamesList;
       })
     })
