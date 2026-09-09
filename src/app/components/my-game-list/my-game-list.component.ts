@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {Game, GamesList, UpdateGamesList} from "../../models/games.model";
 import {NgClass, NgForOf} from "@angular/common";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {GameApiService} from "../../services/game-api.service";
@@ -26,7 +26,8 @@ export class MyGameListComponent {
   updateGamesList : UpdateGamesList;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { gamesList: GamesList },
-              private gameApiService: GameApiService) {
+              private gameApiService: GameApiService,
+              private dialogRef: MatDialogRef<MyGameListComponent>) {
     this.gamesList = data.gamesList;
     this.updateGamesList = {
       gamesListId: this.gamesList.id,
@@ -52,7 +53,10 @@ export class MyGameListComponent {
   saveModifGamesList(){
     this.updateGamesList.removeGameId = this.selectedGames?.map(g => g.id);
     this.gameApiService.updateGamesList(this.updateGamesList).subscribe({
-      next: res => console.log('updateGamesList ok', res),
+      next: res => {
+        console.log('updateGamesList ok', res);
+        this.dialogRef.close();
+      },
       error: err => console.error('updateGamesList error', err),
     });
   }

@@ -23,6 +23,6 @@ export class GameApiService {
   }
 
   updateGamesList(updateGamesList : UpdateGamesList){
-    return this.http.post<String>(`${this.base}/updateGamesList`,updateGamesList);
+    return this.http.post(`${this.base}/updateGamesList`,updateGamesList, {responseType: 'text'});
   }
 }
